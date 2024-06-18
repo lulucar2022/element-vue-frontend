@@ -1,4 +1,4 @@
-# element
+# element-vue-frontend
 
 ## Project setup
 ```
