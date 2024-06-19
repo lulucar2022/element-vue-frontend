@@ -1,0 +1,71 @@
+<template>
+  <div class="wrapper">
+    <!-- 底部菜单部分 -->
+    <ul class="footer">
+      <li @click="goPage()">
+        <i class="fa fa-home"></i>
+        <p>首页</p>
+      </li>
+      <li>
+        <i class="fa fa-compass"></i>
+        <p>发现</p>
+      </li>
+      <li onclick="location.href='orderList.html'">
+        <i class="fa fa-file-text-o"></i>
+        <p>订单</p>
+      </li>
+      <li>
+        <i class="fa fa-user-o"></i>
+        <p>我的</p>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+export default {
+  methods: {
+    // 跳转页面
+    goPage() {
+      this.$router.push({
+        path: "/index",
+      });
+    },
+  },
+};
+</script>
+
+<style lang="css" scoped>
+/****************** 底部菜单部分 ******************/
+.wrapper .footer {
+  width: 100%;
+  height: 14vw;
+  border-top: solid 1px #ddd;
+  background-color: #fff;
+
+  position: fixed;
+  left: 0;
+  bottom: 0;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.wrapper .footer li {
+  /*li本身的尺寸完全由内容撑起*/
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  color: #999;
+  user-select: none;
+  cursor: pointer;
+}
+.wrapper .footer li p {
+  font-size: 2.8vw;
+}
+.wrapper .footer li i {
+  font-size: 5vw;
+}
+</style>
