@@ -6,15 +6,19 @@
     </header>
     <!-- 商家列表部分 -->
     <ul class="business">
-      <li v-for="business in businessList" :key="business.id" @click="toBusinessInfo(business.id)">
+      <li
+        v-for="business in businessList"
+        :key="business.businessId"
+        @click="toBusinessInfo(business.businessId)"
+      >
         <div class="business-img">
           <img :src="business.businessImg" alt="商家图片" />
-          <div class="business-img-quantity">{{ business.deliveryPrice }}</div>
+          <div class="business-img-quantity">1</div>
         </div>
         <div class="business-info">
           <h3>{{ business.businessName }}</h3>
           <p>
-            &#165;{{ business.starPrice }}起送 | &#165;{{
+            &#165;{{ business.startPrice }}起送 | &#165;{{
               business.deliveryPrice
             }}配送
           </p>
@@ -58,6 +62,7 @@ export default {
       )
       .then((res) => {
         this.businessList = res.data;
+        console.log(this.businessList);
       })
       .then((err) => {
         console.log(err);

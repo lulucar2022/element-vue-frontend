@@ -3,7 +3,8 @@ import VueRouter from "vue-router";
 import IndexView from "../views/IndexView.vue";
 import BusinessList from "../views/BusinessList.vue";
 import BusinessInfo from "../views/BusinessInfo.vue";
-
+import LoginView from "@/views/LoginView.vue";
+import RegisterView from '@/views/RegisterView'
 Vue.use(VueRouter);
 
 const routes = [
@@ -27,6 +28,17 @@ const routes = [
     name: "businessInfo",
     component: BusinessInfo,
   },
+  {
+    path: '/login',
+    name: 'login',
+    component: LoginView,
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: RegisterView
+  }
+
 ];
 
 const router = new VueRouter({

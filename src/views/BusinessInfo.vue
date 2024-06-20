@@ -1,177 +1,92 @@
 <template>
-  <div>
-    <div class="wrapper">
-      <!-- header部分 -->
-      <header>
-        <p>商家信息</p>
-      </header>
+  <div class="wrapper">
+    <!-- header部分 -->
+    <header>
+      <p>商家信息</p>
+    </header>
 
-      <!-- 商家logo部分 -->
-      <div class="business-logo">
-        <img src="@/assets/sj01.png" />
-      </div>
+    <!-- 商家logo部分 -->
+    <div class="business-logo">
+      <img :src="business.businessImg" />
+    </div>
 
-      <!-- 商家信息部分 -->
-      <div class="business-info">
-        <h1>{{ business.businessAddress }}</h1>
-        <p>
-          &#165;{{ business.startPrice }}起送 &#165;{{
-            business.deliveryPrice
-          }}配送
-        </p>
-        <p>{{ business.businessExplain }}</p>
-      </div>
+    <!-- 商家信息部分 -->
+    <div class="business-info">
+      <h1>{{ business.businessName }}</h1>
+      <p>
+        &#165;{{ business.startPrice }}起送 &#165;{{
+          business.deliveryPrice
+        }}配送
+      </p>
+      <p>{{ business.businessExplain }}</p>
+    </div>
 
-      <!-- 食品列表部分 -->
-      <ul class="food">
-        <li>
-          <div class="food-left">
-            <img src="img/sp01.png" />
-            <div class="food-left-info">
-              <h3>纯肉鲜肉（水饺）</h3>
-              <p>新鲜猪肉</p>
-              <p>&#165;15</p>
-            </div>
-          </div>
-          <div class="food-right">
-            <div>
-              <i class="fa fa-minus-circle"></i>
-            </div>
-            <p><span>3</span></p>
-            <div>
-              <i class="fa fa-plus-circle"></i>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="food-left">
-            <img src="img/sp02.png" />
-            <div class="food-left-info">
-              <h3>玉米鲜肉（水饺）</h3>
-              <p>玉米鲜肉</p>
-              <p>&#165;16</p>
-            </div>
-          </div>
-          <div class="food-right">
-            <div>
-              <i class="fa fa-minus-circle"></i>
-            </div>
-            <p><span>2</span></p>
-            <div>
-              <i class="fa fa-plus-circle"></i>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="food-left">
-            <img src="img/sp03.png" />
-            <div class="food-left-info">
-              <h3>虾仁三鲜（蒸饺）</h3>
-              <p>虾仁三鲜</p>
-              <p>&#165;22</p>
-            </div>
-          </div>
-          <div class="food-right">
-            <div></div>
-            <p></p>
-            <div>
-              <i class="fa fa-plus-circle"></i>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="food-left">
-            <img src="img/sp04.png" />
-            <div class="food-left-info">
-              <h3>素三鲜（蒸饺）</h3>
-              <p>素三鲜</p>
-              <p>&#165;15</p>
-            </div>
-          </div>
-          <div class="food-right">
-            <div></div>
-            <p></p>
-            <div>
-              <i class="fa fa-plus-circle"></i>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="food-left">
-            <img src="img/sp05.png" />
-            <div class="food-left-info">
-              <h3>角瓜鸡蛋（蒸饺）</h3>
-              <p>角瓜鸡蛋</p>
-              <p>&#165;16</p>
-            </div>
-          </div>
-          <div class="food-right">
-            <div></div>
-            <p></p>
-            <div>
-              <i class="fa fa-plus-circle"></i>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="food-left">
-            <img src="img/sp06.png" />
-            <div class="food-left-info">
-              <h3>小白菜肉（水饺）</h3>
-              <p>小白菜肉</p>
-              <p>&#165;18</p>
-            </div>
-          </div>
-          <div class="food-right">
-            <div></div>
-            <p></p>
-            <div>
-              <i class="fa fa-plus-circle"></i>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="food-left">
-            <img src="img/sp07.png" />
-            <div class="food-left-info">
-              <h3>芹菜牛肉（水饺）</h3>
-              <p>芹菜牛肉</p>
-              <p>&#165;18</p>
-            </div>
-          </div>
-          <div class="food-right">
-            <div></div>
-            <p></p>
-            <div>
-              <i class="fa fa-plus-circle"></i>
-            </div>
-          </div>
-        </li>
-      </ul>
-
-      <!-- 购物车部分 -->
-      <div class="cart">
-        <div class="cart-left">
-          <div class="cart-left-icon">
-            <i class="fa fa-shopping-cart"></i>
-            <div class="cart-left-icon-quantity">3</div>
-          </div>
-          <div class="cart-left-info">
-            <p>&#165;12.88</p>
-            <p>另需配送费3元</p>
+    <!-- 食品列表部分 -->
+    <ul class="food">
+      <li v-for="(item, index) in foodList" :key="index">
+        <div class="food-left">
+          <img :src="item.foodImg" />
+          <div class="food-left-info">
+            <h3>{{ item.foodName }}</h3>
+            <p>{{ item.foodExplain }}</p>
+            <p>&#165;{{ item.foodPrice }}</p>
           </div>
         </div>
-        <div class="cart-right">
-          <!-- 不够起送费 -->
-          <!--
-					<div class="cart-right-item">
-						&#165;15起送
-					</div>
-					-->
-          <!-- 达到起送费 -->
-          <div class="cart-right-item" onclick="location.href='order.html'">
-            去结算
+        <div class="food-right">
+          <div>
+            <i
+              class="fa fa-minus-circle"
+              @click="minusCart(index)"
+              v-show="item.quantity != 0"
+            ></i>
           </div>
+          <p>
+            <span v-show="item.quantity > 0">{{ item.quantity }}</span>
+          </p>
+          <div>
+            <i class="fa fa-plus-circle" @click="addCart(index)"></i>
+          </div>
+        </div>
+      </li>
+    </ul>
+
+    <!-- 购物车部分 -->
+    <div class="cart">
+      <div class="cart-left">
+        <div
+          class="cart-left-icon"
+          :style="
+            totalQuantity == 0
+              ? 'background-color:#505051;'
+              : 'background-color:#3190E8;'
+          "
+        >
+          <i class="fa fa-shopping-cart"></i>
+          <div class="cart-left-icon-quantity" v-show="totalQuantity != 0">
+            {{ totalQuantity }}
+          </div>
+        </div>
+        <div class="cart-left-info">
+          <p>&#165;{{ totalPrice }}</p>
+          <p>另需配送费{{ business.deliveryPrice }}元</p>
+        </div>
+      </div>
+      <div class="cart-right">
+        <!-- 不够起送费 -->
+        <div
+          class="cart-right-item"
+          v-show="totalSettlementPrice < business.startPrice"
+          style="background-color: #535356; cursor: default"
+        >
+          &#165;{{ business.startPrice }}起送
+        </div>
+        <!-- 达到起送费 -->
+        <div
+          class="cart-right-item"
+          @click="toOder"
+          v-show="totalSettlementPrice >= business.startPrice"
+        >
+          去结算
         </div>
       </div>
     </div>
@@ -179,24 +94,205 @@
 </template>
 
 <script>
+import Vue from "vue";
 export default {
   data() {
     return {
       businessId: this.$route.query.businessId,
       business: {},
+      foodList: [],
+      user: {},
     };
   },
   created() {
-    console.log(this.businessId);
+    // 查看用户是否登录
+    this.user = this.$getSessionStorage("user");
+    console.log("businessId =", this.businessId);
+    // 商家信息
     this.$axios
-      .get("/BusinessController/getBusinessById?" + this.businessId)
+      .get("/BusinessController/getBusinessById?businessId=" + this.businessId)
       .then((res) => {
         this.business = res.data;
-        console.log(res.data);
+        console.log("business = ", this.business);
       })
       .catch((err) => {
         console.log(err);
       });
+    // 该商家的菜品
+    this.$axios
+      .get("/FoodController/listFoodByBusinessId?businessId=" + this.businessId)
+      .then((res) => {
+        this.foodList = res.data;
+        console.log("foodList =", this.foodList);
+        // 初始化菜品的数量
+        this.foodList.forEach((foodItem) => {
+          Vue.set(foodItem, "quantity", 0);
+        });
+        // 如果登录了，则需要去查询用户的购物车数据
+        if (this.user != null) {
+          this.listCart();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+  methods: {
+    // 购物车展示
+    listCart() {
+      const data = this.$qs.stringify({
+        userId: this.user.userId,
+        businessId: this.business.businessId,
+      });
+      this.$axios
+        .get("/CartController/listCart?" + data)
+        .then((res) => {
+          let cartList = res.data;
+
+          // 遍历菜品数组，把在购物车中的菜品设置数量
+          // 创建一个 Map 来存储 foodId 到 quantity 的映射
+          const cartMap = new Map();
+          cartList.forEach((cartItem) => {
+            cartMap.set(cartItem.foodId, cartItem.quantity);
+          });
+
+          // 现在遍历 foodList 并更新 quantity
+          this.foodList.forEach((foodItem) => {
+            if (cartMap.has(foodItem.foodId)) {
+              foodItem.quantity = cartMap.get(foodItem.foodId);
+            }
+          });
+          console.log("foodList={}", this.foodList);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    // 登录验证
+    checkUser() {
+      // 登录验证
+      if (this.user == null) {
+        this.$router.push("/login");
+        return;
+      }
+    },
+    // 购物车添加按钮功能
+    addCart(index) {
+      // 登录验证
+      this.checkUser();
+      // 当数量为0执行添加，数量不为0执行更新
+      if (this.foodList[index].quantity === 0) {
+        this.saveCart(index);
+      } else {
+        this.updateCart(index, 1);
+      }
+    },
+
+    // 购物车减少按钮功能
+    minusCart(index) {
+      // 登录验证
+      this.checkUser();
+      // 当数量>1，执行更行，数量为1就执行删除
+      if (this.foodList[index].quantity > 1) {
+        this.updateCart(index, -1);
+      } else {
+        this.removeCart(index);
+      }
+    },
+
+    // 添加菜品
+    saveCart(index) {
+      const data = {
+        userId: this.user.userId,
+        businessId: this.businessId,
+        foodId: this.foodList[index].foodId,
+      };
+      this.$axios
+        .post("/CartController/saveCart", data)
+        .then((res) => {
+          let saved = res.data;
+          if (saved === 1) {
+            this.foodList[index].quantity = 1;
+          } else {
+            alert("添加失败");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
+    // 删除菜品
+    removeCart(index) {
+      const data = {
+        userId: this.user.userId,
+        businessId: this.businessId,
+        foodId: this.foodList[index].foodId,
+      };
+      this.$axios
+        .post("/CartController/removeCart", data)
+        .then((res) => {
+          let removed = res.data;
+          if (removed == 1) {
+            this.foodList[index].quantity = 0;
+          } else {
+            return;
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
+    // 更新菜品
+    updateCart(index, num) {
+      const data = {
+        userId: this.user.userId,
+        businessId: this.businessId,
+        foodId: this.foodList[index].foodId,
+        quantity: this.foodList[index].quantity + num,
+      };
+      this.$axios
+        .post("/CartController/updateCart", data)
+        .then((res) => {
+          let updated = res.data;
+          if (updated == 1) {
+            this.foodList[index].quantity += num;
+          } else {
+            alert("更新失败");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
+    // 跳转到order
+    toOder() {},
+  },
+  computed: {
+    // 菜品总价格
+    totalPrice() {
+      let total = 0;
+      for (let foodItem of this.foodList) {
+        total += foodItem.foodPrice * foodItem.quantity;
+      }
+
+      return total;
+    },
+    // 菜品总数量
+    totalQuantity() {
+      let quantity = 0;
+      for (let foodItem of this.foodList) {
+        quantity += foodItem.quantity;
+      }
+
+      return quantity;
+    },
+    // 结算总价格(菜品总价+配送费)
+    totalSettlementPrice() {
+      return this.totalPrice + this.business.deliveryPrice;
+    },
   },
 };
 </script>
