@@ -78,21 +78,66 @@ export default {
       daId: this.$route.query.daId,
       user: {},
       deliveryAddress: {},
-      
-    }
+    };
   },
   created() {
-    this.user = this.$getSessionStorage('user')
+    this.user = this.$getSessionStorage("user");
     // 先获取用户地址
-    this.$axios.get('/DeliveryAddressController/getDeliveryAddressById?daId='+this.daId).then(res => {
-      if (res.data.code === 200) {
-        this.deliveryAddress = res.data.data
-      }
-    })
+    this.$axios
+      .get(
+        "/DeliveryAddressController/getDeliveryAddressById?daId=" + this.daId
+      )
+      .then((res) => {
+        if (res.data.code === 200) {
+          this.deliveryAddress = res.data.data;
+        }
+      });
   },
   methods: {
     // 修改用户地址
-    editUserAddress() {},
+    editUserAddress() {
+      // 对电话、姓名和地址参数进行校验
+      if (this.deliveryAddress.contactName === "") {
+        alert("联系人姓名不能为空!");
+        return;
+      }
+      if (this.deliveryAddress.contactSex === "") {
+        alert("联系人性别不能为空!");
+        return;
+      }
+      if (this.deliveryAddress.address === "") {
+        alert("收货地址不能为空!");
+        return;
+      }
+
+      const data = {
+        daId: this.daId,
+        contactName: this.deliveryAddress.contactName,
+        contactSex: this.deliveryAddress.contactSex,
+        contactTel: this.deliveryAddress.contactTel,
+        address: this.deliveryAddress.address,
+      };
+      // 发起更新请求
+      this.$axios
+        .post("/DeliveryAddressController/updateDeliveryAddress", data)
+        .then((res) => {
+          if (res.data.code === 200) {
+            alert("地址修改成功!");
+            // 修改后跳转到用户地址列表页面
+            this.$router.push({
+              path: "/userAddress",
+              query: {
+                businessId: this.businessId,
+              },
+            });
+          } else {
+            alert("地址修改失败!");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
 };
 </script>

@@ -16,8 +16,15 @@
         </p>
         <i class="fa fa-angle-right"></i>
       </div>
-      <p>姓名：{{ user.userName }}{{ user.userSex | sexFilter }}</p>
-      <p>手机号码：{{ user.userId }}</p>
+      <div v-if="deliveryAddress != null">
+        姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：{{ deliveryAddress.contactName }}
+        <br />
+        联系电话：{{ deliveryAddress.contactTel }}
+      </div>
+      <div v-else>
+        <p>姓名：{{ user.userName }}{{ user.userSex | sexFilter }}</p>
+        <p>手机号码：{{ user.userId }}</p>
+      </div>
     </div>
 
     <h3>{{ business.businessName }}</h3>
