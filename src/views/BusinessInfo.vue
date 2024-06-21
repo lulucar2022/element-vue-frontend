@@ -83,7 +83,7 @@
         <!-- 达到起送费 -->
         <div
           class="cart-right-item"
-          @click="toOder"
+          @click="toOrder"
           v-show="totalSettlementPrice >= business.startPrice"
         >
           去结算
@@ -268,7 +268,14 @@ export default {
     },
 
     // 跳转到order
-    toOder() {},
+    toOrder() {
+      this.$router.push({
+        path: '/orders',
+        query: {
+          businessId: this.business.businessId
+        }
+      })
+    },
   },
   computed: {
     // 菜品总价格

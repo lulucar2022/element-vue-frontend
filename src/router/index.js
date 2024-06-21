@@ -37,6 +37,24 @@ const routes = [
     path: '/register',
     name: 'register',
     component: RegisterView
+  },
+  {
+    path: "/userAddress",
+    name: "userAddress",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/UserAddress.vue"),
+  },
+  {
+    path: '/orders',
+    name: 'orders',
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/OrderView.vue'),
+  },
+  {
+    path: '/addUserAddress',
+    name: 'addUserAddress',
+    component: () =>
+      import(/* webpackChunkName: "about" */ '../views/AddAddress.vue'),
   }
 
 ];
