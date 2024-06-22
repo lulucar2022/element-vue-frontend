@@ -14,6 +14,7 @@ import {
   getLocalStorage,
   removeLocalStorage,
 } from "./common.js";
+import store from "@/store/store";
 
 Vue.config.productionTip = false;
 // axios 基础url
@@ -61,5 +62,6 @@ router.beforeEach((to, from, next) => {
 // 路由后置钩子
 new Vue({
   router,
+  store,
   render: (h) => h(App),
 }).$mount("#app");
