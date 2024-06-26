@@ -61,6 +61,18 @@ const routes = [
     name: 'editUserAddress',
     component: () =>
       import(/* webpackChunkName: "about" */ '../views/EditAddress.vue'),
+  },
+  {
+    path: '/payment',
+    name: 'payment',
+    component: () =>
+      import('../views/PaymentView.vue')
+  },
+  {
+    path: '/orderList',
+    name: 'orderList',
+    component: () =>
+      import('../views/OrderList.vue')
   }
 
 ];

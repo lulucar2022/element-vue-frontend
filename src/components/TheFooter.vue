@@ -2,7 +2,7 @@
   <div class="wrapper">
     <!-- 底部菜单部分 -->
     <ul class="footer">
-      <li @click="goPage()">
+      <li @click="goIndex()">
         <i class="fa fa-home"></i>
         <p>首页</p>
       </li>
@@ -10,7 +10,7 @@
         <i class="fa fa-compass"></i>
         <p>发现</p>
       </li>
-      <li onclick="location.href='orderList.html'">
+      <li @click="goOrderList">
         <i class="fa fa-file-text-o"></i>
         <p>订单</p>
       </li>
@@ -26,11 +26,17 @@
 export default {
   methods: {
     // 跳转页面
-    goPage() {
+    goIndex() {
       this.$router.push({
         path: "/index",
       });
     },
+    // 跳转订单页面
+    goOrderList() {
+      this.$router.push({
+        path: '/orderList'
+      })
+    }
   },
 };
 </script>

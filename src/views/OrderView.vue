@@ -17,7 +17,9 @@
         <i class="fa fa-angle-right"></i>
       </div>
       <div v-if="deliveryAddress != null">
-        姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：{{ deliveryAddress.contactName }}
+        姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：{{
+          deliveryAddress.contactName
+        }}
         <br />
         联系电话：{{ deliveryAddress.contactTel }}
       </div>
@@ -79,6 +81,36 @@ export default {
         alert("请选择收货地址");
         return;
       }
+      // 创建订单
+      const data = {
+        userId: this.user.userId,
+        businessId: this.businessId,
+        orderTotal: this.totalPrice,
+        daId: this.deliveryAddress.daId,
+        orderState: 0, // 0 未支付，1 已支付
+      };
+      this.$axios
+        .post("/OrderController/createOrder", data)
+        .then((res) => {
+          let orderId = res.data.data;
+          let code = res.data.code;
+          let msg = res.data.message;
+          if (orderId > 0 && code == 200 && msg === "success") {
+            alert("订单创建成功");
+            // 跳转到支付页面
+            this.$router.push({
+              path: "/payment",
+              query: {
+                orderId: orderId,
+              },
+            });
+          } else {
+            alert("订单创建失败");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
   created() {
