@@ -17,7 +17,7 @@
 
     <!-- 订单明细部分 -->
     <ul class="order-Detail" v-show="isShowDetail">
-      <li v-for="(item, index) in orders.list" :key="index">
+      <li v-for="(item, index) in orders.orderDetails" :key="index">
         <p>{{ item.food.foodName }} x {{ item.quantity }}</p>
         <p>&#165;{{ item.food.foodPrice * item.quantity }}</p>
       </li>
@@ -79,6 +79,7 @@ export default {
       .get("/OrderController/getOrdersById?orderId=" + this.orderId)
       .then((res) => {
         this.orders = res.data.data;
+        console.log("order:{}", this.orders);
       })
       .catch((err) => {
         console.log(err);

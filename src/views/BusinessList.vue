@@ -36,7 +36,6 @@
 
 <script>
 import TheFooter from "@/components/TheFooter";
-import Vue from "vue";
 export default {
   components: {
     TheFooter,
@@ -61,8 +60,8 @@ export default {
       // 获取购物车列表
       this.$axios
         .get("/CartController/listCart?userId=" + this.user.userId)
-        .then((response) => {
-          let cartList = response.data;
+        .then((res) => {
+          let cartList = res.data.data;
           console.log("cartList:", cartList);
           // 遍历菜品数组，把在购物车中的菜品设置数量
           // 创建一个 Map 来存储 foodId 到 quantity 的映射
@@ -88,7 +87,7 @@ export default {
           // 现在遍历 businessList 并更新 quantity
           this.businessList.forEach((businessItem) => {
             // 响应式添加 quantity属性
-            Vue.set(businessItem, "quantity", 0);
+            this.$set(businessItem, "quantity", 0);
             // 匹配到商家就可以赋值菜品数量
             if (quantityByBusinessId.has(businessItem.businessId)) {
               businessItem.quantity = quantityByBusinessId.get(businessItem.businessId);
@@ -110,9 +109,8 @@ export default {
           this.orderTypeId
       )
       .then((res) => {
-        this.businessList = res.data;
+        this.businessList = res.data.data;
         // 展示
-
         // 用户存在就不需要去找用户在该商家的购物车信息了
         if (this.user != null) {
           this.listCart();

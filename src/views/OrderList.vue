@@ -8,7 +8,7 @@
     <!-- 订单列表部分 -->
     <h3>未支付订单信息：</h3>
     <ul class="order">
-      <li v-for="{ order, index } in isShowOrderList" :key="index">
+      <li v-for="(order, index) in showNoPaymentList" :key="index">
         <div class="order-info">
           <p>
             {{ order.business.businessName }}
@@ -16,17 +16,17 @@
           </p>
           <div class="order-info-right">
             <p>&#165;{{ order.orderTotal }}</p>
-            <div class="order-info-right-icon">去支付</div>
+            <div class="order-info-right-icon" @click="goPayment(order)">去支付</div>
           </div>
         </div>
         <ul class="order-detail" v-show="order.isShowDetail">
-          <li v-for="(odItem, index) in item.list" :key="index">
+          <li v-for="(odItem, index) in order.orderDetails" :key="index">
             <p>{{ odItem.food.foodName }} x {{ odItem.quantity }}</p>
             <p>&#165;{{ odItem.food.foodPrice * odItem.quantity }}</p>
           </li>
           <li>
             <p>配送费</p>
-            <p>&#165;{{ item.business.deliveryPrice }}</p>
+            <p>&#165;{{ order.business.deliveryPrice }}</p>
           </li>
         </ul>
       </li>
@@ -34,7 +34,7 @@
 
     <h3>已支付订单信息：</h3>
     <ul class="order">
-      <li v-for="(item, index) in orderList" :key="index">
+      <li v-for="(item, index) in showPaymentList" :key="index">
         <div class="order-info">
           <p>
             {{ item.business.businessName }}
@@ -74,8 +74,9 @@ export default {
       orderList: [],
     };
   },
+  // 生命周期函数
   created() {
-    // 生命周期函数
+    
     this.user = this.$getSessionStorage("user");
 
     // 订单展示
@@ -83,12 +84,12 @@ export default {
     this.$axios
       .get("/OrderController/listOrdersByUserId?userId=" + this.user.userId)
       .then((res) => {
-        if (res.data.code == 200 && res.data.message == "success") {
+        if (res.data.code == 200) {
           this.orderList = res.data.data;
           this.orderList.forEach((order) => {
-            this.$set(order, 'isShowDetail', false)
+            this.$set(order, "isShowDetail", false);
           });
-          console.log(this.orderList)
+          console.log(this.orderList);
         }
       })
       .catch((err) => {
@@ -99,13 +100,28 @@ export default {
     detailShow(order) {
       order.isShowDetail = !order.isShowDetail;
     },
+    // 去支付订单，跳转到支付页面
+    goPayment(order) {
+      this.$router.push({
+        path: '/payment',
+        query: {
+          orderId: order.orderId
+        }
+      })
+    }
   },
   computed: {
     // 计算属性
     // 未支付订单列表
-    isShowOrderList() {
+    showNoPaymentList() {
       return this.orderList.filter((order) => {
-        order.orderState === 0;
+        return order.orderState == 0;
+      });
+    },
+    // 已支付订单列表
+    showPaymentList() {
+      return this.orderList.filter((order) => {
+        return order.orderState == 1;
       });
     },
   },

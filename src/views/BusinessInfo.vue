@@ -112,8 +112,12 @@ export default {
     this.$axios
       .get("/BusinessController/getBusinessById?businessId=" + this.businessId)
       .then((res) => {
-        this.business = res.data;
-        console.log("business = ", this.business);
+        if (res.data.code === 200) {
+          this.business = res.data.data;
+          console.log("business = ", this.business);
+        } else {
+          console.log(res.data.body);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -122,15 +126,19 @@ export default {
     this.$axios
       .get("/FoodController/listFoodByBusinessId?businessId=" + this.businessId)
       .then((res) => {
-        this.foodList = res.data;
-        console.log("foodList =", this.foodList);
-        // 初始化菜品的数量
-        this.foodList.forEach((foodItem) => {
-          Vue.set(foodItem, "quantity", 0);
-        });
-        // 如果登录了，则需要去查询用户的购物车数据
-        if (this.user != null) {
-          this.listCart();
+        if (res.data.code === 200) {
+          this.foodList = res.data.data;
+          console.log("foodList =", this.foodList);
+          // 初始化菜品的数量
+          this.foodList.forEach((foodItem) => {
+            Vue.set(foodItem, "quantity", 0);
+          });
+          // 如果登录了，则需要去查询用户的购物车数据
+          if (this.user != null) {
+            this.listCart();
+          }
+        } else {
+          console.log(res.data.body);
         }
       })
       .catch((err) => {
@@ -147,22 +155,26 @@ export default {
       this.$axios
         .get("/CartController/listCart?" + data)
         .then((res) => {
-          let cartList = res.data;
+          if (res.data.code === 200) {
+            let cartList = res.data.data;
 
-          // 遍历菜品数组，把在购物车中的菜品设置数量
-          // 创建一个 Map 来存储 foodId 到 quantity 的映射
-          const cartMap = new Map();
-          cartList.forEach((cartItem) => {
-            cartMap.set(cartItem.foodId, cartItem.quantity);
-          });
+            // 遍历菜品数组，把在购物车中的菜品设置数量
+            // 创建一个 Map 来存储 foodId 到 quantity 的映射
+            const cartMap = new Map();
+            cartList.forEach((cartItem) => {
+              cartMap.set(cartItem.foodId, cartItem.quantity);
+            });
 
-          // 现在遍历 foodList 并更新 quantity
-          this.foodList.forEach((foodItem) => {
-            if (cartMap.has(foodItem.foodId)) {
-              foodItem.quantity = cartMap.get(foodItem.foodId);
-            }
-          });
-          console.log("foodList={}", this.foodList);
+            // 现在遍历 foodList 并更新 quantity
+            this.foodList.forEach((foodItem) => {
+              if (cartMap.has(foodItem.foodId)) {
+                foodItem.quantity = cartMap.get(foodItem.foodId);
+              }
+            });
+            console.log("foodList={}", this.foodList);
+          } else {
+            console.log(res.data.body);
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -210,11 +222,12 @@ export default {
       this.$axios
         .post("/CartController/saveCart", data)
         .then((res) => {
-          let saved = res.data;
+          let saved = res.data.data;
           if (saved === 1) {
             this.foodList[index].quantity = 1;
           } else {
             alert("添加失败");
+            console.log(res.data.body);
           }
         })
         .catch((err) => {
@@ -232,10 +245,11 @@ export default {
       this.$axios
         .post("/CartController/removeCart", data)
         .then((res) => {
-          let removed = res.data;
+          let removed = res.data.data;
           if (removed == 1) {
             this.foodList[index].quantity = 0;
           } else {
+            console.log(res.data.body);
             return;
           }
         })
@@ -255,7 +269,7 @@ export default {
       this.$axios
         .post("/CartController/updateCart", data)
         .then((res) => {
-          let updated = res.data;
+          let updated = res.data.data;
           if (updated == 1) {
             this.foodList[index].quantity += num;
           } else {
@@ -270,11 +284,11 @@ export default {
     // 跳转到order
     toOrder() {
       this.$router.push({
-        path: '/orders',
+        path: "/orders",
         query: {
-          businessId: this.business.businessId
-        }
-      })
+          businessId: this.business.businessId,
+        },
+      });
     },
   },
   computed: {

@@ -64,7 +64,7 @@ export default {
       this.$axios
         .post("/UserController/getUserByIdByPass", data)
         .then((res) => {
-          let user = res.data;
+          let user = res.data.data;
           if (user == null || user == "") {
             alert("用户名或密码输入错误");
             return;

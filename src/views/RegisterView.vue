@@ -92,7 +92,7 @@ export default {
       this.$axios
         .get("/UserController/getUserById?userId=" + this.user.userId)
         .then((res) => {
-          if (res.data == 1) {
+          if (res.data.data == 1) {
             this.user.userId = "";
             alert("该手机号码已注册");
           }
@@ -121,8 +121,8 @@ export default {
       //注册请求
       this.$axios
         .post("UserController/saveUser", this.user)
-        .then((response) => {
-          if (response.data > 0) {
+        .then((res) => {
+          if (res.data.data > 0) {
             alert("注册成功！");
             this.$router.go(-1);
           } else {

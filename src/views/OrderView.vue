@@ -121,7 +121,7 @@ export default {
     this.$axios
       .get("/BusinessController/getBusinessById?businessId=" + this.businessId)
       .then((res) => {
-        this.business = res.data;
+        this.business = res.data.data;
       })
       .catch((err) => {
         console.log(err);
@@ -134,8 +134,8 @@ export default {
     });
     this.$axios
       .get("/CartController/listCart?" + data)
-      .then((response) => {
-        this.cartList = response.data;
+      .then((res) => {
+        this.cartList = res.data.data;
       })
       .catch((error) => {
         console.error(error);
