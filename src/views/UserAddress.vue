@@ -55,7 +55,7 @@ export default {
           if (res.data.code == 200) {
             this.deliveryAddressList = res.data.data;
           }
-          console.log(res);
+          console.log(this.deliveryAddressList);
         })
         .catch((err) => {
           console.log(err);

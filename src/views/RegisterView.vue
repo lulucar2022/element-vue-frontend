@@ -14,8 +14,7 @@
             type="text"
             @blur="checkUserId"
             v-model="user.userId"
-            placeholder="手
-机号码"
+            placeholder="手机号码"
           />
         </div>
       </li>
